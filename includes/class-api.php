@@ -34,18 +34,18 @@ class BLM_API {
         );
     }
 
-    public static function get_api_key() {
-
+    public static function get_api_key(): string
+    {
         return get_option(
             'blm_api_key',
             ''
         );
     }
 
-    private function request(
-        $endpoint,
-        $params = []
-    ) {
+    private static function request(
+        string $endpoint,
+        array $params = []
+    ): array {
 
         $api_key = self::get_api_key();
 
@@ -189,16 +189,14 @@ class BLM_API {
             ?? [];
     }
 
-    public static function get_leagues()
+    public static function get_leagues(): array
     {
         return BLM_Cache::remember(
             'blm_leagues',
             DAY_IN_SECONDS,
             function () {
 
-                $instance = new self();
-
-                return $instance->request(
+                return self::request(
                     '/leagues'
                 );
             }
@@ -206,19 +204,17 @@ class BLM_API {
     }
 
     public static function get_games(
-        $date = null
-    ) {
+        ?string $date = null
+    ): array {
 
-        $date = $date ?: date('Y-m-d');
+        $date = $date ?: current_time('Y-m-d');
 
         return BLM_Cache::remember(
             'blm_games_' . $date,
-            300,
+            5 * MINUTE_IN_SECONDS,
             function () use ($date) {
 
-                $instance = new self();
-
-                return $instance->request(
+                return self::request(
                     '/games',
                     [
                         'date' => $date
@@ -230,21 +226,20 @@ class BLM_API {
     }
 
     public static function get_standings(
-        $league_id,
-        $season
-    ) {
+        int $league_id,
+        int $season
+    ): array
+    {
 
         return BLM_Cache::remember(
             "blm_standings_{$league_id}_{$season}",
-            HOUR_IN_SECONDS,
+            15 * MINUTE_IN_SECONDS,
             function () use (
                 $league_id,
                 $season
             ) {
 
-                $instance = new self();
-
-                return $instance->request(
+                return self::request(
                     '/standings',
                     [
                         'league' => $league_id,
