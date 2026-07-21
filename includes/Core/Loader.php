@@ -33,7 +33,6 @@ class BLM_Loader
 
         require_once BLM_PATH . 'includes/class-admin.php';
         require_once BLM_PATH . 'includes/class-shortcode.php';
-        require_once BLM_PATH . 'includes/class-settings.php';
         require_once BLM_PATH . 'includes/class-ticker.php';
         require_once BLM_PATH . 'includes/class-standings.php';
         require_once BLM_PATH . 'includes/Core/Assets.php';
@@ -74,6 +73,5 @@ class BLM_Loader
 
         new BLM_Standings();
 
-        new BLM_Settings();
     }
 }
