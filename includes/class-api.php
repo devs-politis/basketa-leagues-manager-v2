@@ -54,7 +54,7 @@ class BLM_API {
         }
 
         $url =
-            $this->base_url .
+            self::BASE_URL .
             $endpoint;
 
         if (!empty($params)) {
@@ -189,80 +189,44 @@ class BLM_API {
             ?? [];
     }
 
-    public static function get_leagues() {
+    public static function get_leagues()
+    {
+        return BLM_Cache::remember(
+            'blm_leagues',
+            DAY_IN_SECONDS,
+            function () {
 
-        $cache =
-            get_transient(
-                'blm_leagues'
-            );
+                $instance = new self();
 
-        if (
-            $cache !== false
-            &&
-            !empty($cache)
-        ) {
-            return $cache;
-        }
-
-        $instance = new self();
-
-        $leagues =
-            $instance->request(
-                '/leagues'
-            );
-
-        if (!empty($leagues)) {
-
-            set_transient(
-                'blm_leagues',
-                $leagues,
-                DAY_IN_SECONDS
-            );
-        }
-
-        return $leagues;
+                return $instance->request(
+                    '/leagues'
+                );
+            }
+        );
     }
 
     public static function get_games(
         $date = null
     ) {
 
-        $date =
-            $date ?: date('Y-m-d');
+        $date = $date ?: date('Y-m-d');
 
-        $cache_key =
-            'blm_games_' .
-            $date;
+        return BLM_Cache::remember(
+            'blm_games_' . $date,
+            300,
+            function () use ($date) {
 
-        $cache =
-		    get_transient(
-		        $cache_key
-		    );
-		
-    if ($cache !== false) {
-        return $cache;
-    }
+                $instance = new self();
 
-        $instance = new self();
+                return $instance->request(
+                    '/games',
+                    [
+                        'date' => $date
+                    ]
+                );
 
-        $games =
-            $instance->request(
-                '/games',
-                [
-                    'date' => $date
-                ]
-            );
-
-        if (!empty($games)) {
-
-            set_transient(
-                $cache_key,
-                $games,
-                300
-            );
-        }
-
-        return $games;
+            }
+        );
     }
 
     public static function get_standings(
@@ -270,44 +234,25 @@ class BLM_API {
         $season
     ) {
 
-        $cache_key =
-            'blm_standings_' .
-            $league_id .
-            '_' .
-            $season;
+        return BLM_Cache::remember(
+            "blm_standings_{$league_id}_{$season}",
+            HOUR_IN_SECONDS,
+            function () use (
+                $league_id,
+                $season
+            ) {
 
-        $cache =
-            get_transient(
-                $cache_key
-            );
+                $instance = new self();
 
-        if ($cache !== false) {
-		
-		    return $cache;
-		}
+                return $instance->request(
+                    '/standings',
+                    [
+                        'league' => $league_id,
+                        'season' => $season
+                    ]
+                );
 
-        $instance = new self();
-
-        $standings =
-            $instance->request(
-                '/standings',
-                [
-                    'league' => $league_id,
-                    'season' => $season
-                ]
-            );
-
-        if (
-            !empty($standings)
-        ) {
-
-            set_transient(
-                $cache_key,
-                $standings,
-                HOUR_IN_SECONDS
-            );
-        }
-
-        return $standings;
+            }
+        );
     }
 }

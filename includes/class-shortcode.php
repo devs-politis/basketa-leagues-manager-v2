@@ -36,20 +36,7 @@ class BLM_Shortcode {
 
     public function ticker($atts = []) {
 
-        wp_enqueue_style(
-            'blm-ticker',
-            BLM_URL . 'assets/css/ticker.css',
-            [],
-            BLM_VERSION
-        );
-
-        wp_enqueue_script(
-            'blm-ticker',
-            BLM_URL . 'assets/js/ticker.js',
-            [],
-            BLM_VERSION,
-            true
-        );
+        BLM_Assets::standings();
 
         $atts = shortcode_atts([
             'filter' => 'false',

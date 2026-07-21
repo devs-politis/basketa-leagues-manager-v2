@@ -24,29 +24,7 @@ class BLM_Standings_Frontend
 
     public function render(array $atts = []): string
     {
-        wp_enqueue_style(
-            'blm-standings',
-            BLM_URL . 'assets/css/standings.css',
-            [],
-            BLM_VERSION
-        );
-
-        wp_enqueue_script(
-            'blm-standings',
-            BLM_URL . 'assets/js/standings.js',
-            [],
-            BLM_VERSION,
-            true
-        );
-
-        wp_localize_script(
-            'blm-standings',
-            'blmStandings',
-            [
-                'ajax'  => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('blm_standings'),
-            ]
-        );
+        BLM_Assets::standings();
 
         $enabled = $this->repository->getEnabledLeagues();
 
