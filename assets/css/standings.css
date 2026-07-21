@@ -1,0 +1,219 @@
+:root{
+    --blm-bg:#141414;
+    --blm-card:#1B1B1B;
+    --blm-border:#303030;
+    --blm-accent:#FF5100;
+    --blm-text:#F5F5F5;
+    --blm-muted:#A0A0A0;
+}
+
+.blm-standings-tabs{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:20px 0;
+}
+
+.blm-tab{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    background:#1F1F1F;
+    color:#fff;
+
+    border:1px solid #292929;
+    border-radius:6px;
+
+    padding:10px 18px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.blm-tab:hover{
+    border-color:var(--blm-accent);
+}
+
+.blm-tab.active{
+    border-color:var(--blm-accent);
+    background:#101010;
+}
+
+.blm-tab-logo{
+    width:26px;
+    height:26px;
+    object-fit:contain;
+}
+
+.blm-standings-card{
+
+    background:var(--blm-card);
+
+    border-radius:8px;
+
+    overflow:hidden;
+}
+
+.blm-standings-header{
+
+    padding:20px 24px;
+
+    border-bottom:1px solid var(--blm-border);
+}
+
+.blm-standings-header h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    color:#fff;
+
+    font-weight:500;
+}
+
+.blm-standings-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.blm-standings-table thead th{
+
+    color:var(--blm-accent);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    padding:14px;
+
+    border-bottom:2px solid #5a5a5a;
+
+    text-align:left;
+}
+
+.blm-standings-table td{
+
+    padding:14px;
+
+    color:var(--blm-text);
+
+    border-bottom:1px solid #2A2A2A;
+
+    font-size:14px;
+}
+
+.blm-standings-table tbody tr:hover{
+
+    background:#222;
+}
+
+.blm-standings-table .blm-team{
+
+    display:flex;
+
+    align-items:center;
+    justify-content: start;
+
+    gap:10px;
+}
+
+.blm-standings-table .blm-team img{
+
+    width:22px;
+
+    height:22px;
+
+    object-fit:contain;
+}
+
+.club{
+
+    width:45%;
+}
+
+.blm-standings-table td:first-child{
+
+    width:40px;
+
+    font-weight:700;
+}
+
+.blm-playin-start td{
+    border-top:2px dashed #FF5100 !important;
+}
+
+.blm-eliminated-start td{
+    border-top:2px solid #FF5100 !important;
+}
+
+.blm-standings-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.blm-header-logo{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
+.blm-header-text{
+    display:flex;
+    flex-direction:column;
+}
+
+.blm-header-text h2{
+    margin:0;
+    color:#fff;
+    font-size:22px;
+    line-height:1.2;
+}
+
+.blm-header-text p{
+    margin:4px 0 0;
+    color:#bbb;
+    font-size:14px;
+}
+
+.blm-no-standings{
+    padding:40px;
+    text-align:center;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+}
+
+.blm-no-standings p{
+    margin:0;
+    color:#666;
+    font-size:15px;
+}
+
+@media(max-width:768px){
+
+    .blm-tab{
+
+        width:100%;
+
+        justify-content:center;
+    }
+
+    .blm-standings-card{
+
+        overflow-x:auto;
+    }
+
+    .blm-standings-table{
+
+        min-width:720px;
+    }
+
+}
