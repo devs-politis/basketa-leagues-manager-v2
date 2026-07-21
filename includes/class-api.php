@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 class BLM_API {
 
-    private $base_url = 'https://v1.basketball.api-sports.io';
+    private const BASE_URL = 'https://v1.basketball.api-sports.io';
 
     public function __construct() {
 

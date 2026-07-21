@@ -113,35 +113,6 @@ class BLM_Frontend_Standings
         return [];
     }
 
-    private function get_available_leagues($enabled)
-    {
-        $available = [];
-
-        foreach ($enabled as $id => $league) {
-
-            $seasons = $this->get_league_seasons($id);
-
-            foreach ($seasons as $season) {
-
-                $standings = BLM_API::get_standings(
-                    $id,
-                    $season['season']
-                );
-
-                if (!empty($standings[0])) {
-
-                    $league['default_season'] = $season['season'];
-
-                    $available[$id] = $league;
-
-                    break;
-                }
-            }
-        }
-
-        return $available;
-    }
-
     public function ajax()
     {
         check_ajax_referer(
@@ -255,21 +226,9 @@ class BLM_Frontend_Standings
         );
     }
 
-    $all_leagues = BLM_API::get_leagues();
 
     $league_name = '';
     $league_logo = '';
-
-    foreach ($all_leagues as $league) {
-
-        if ($league['id'] == $league_id) {
-
-            $league_name = $league['name'];
-            $league_logo = $league['logo'] ?? '';
-
-            break;
-        }
-    }
 
     $stage_name =
         $standings[0][0]['group']['name']
