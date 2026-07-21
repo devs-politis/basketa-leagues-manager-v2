@@ -38,7 +38,7 @@ require_once BLM_PATH . 'includes/Helpers/class-helper.php';
 require_once BLM_PATH . 'includes/class-ticker.php';
 require_once BLM_PATH . 'includes/class-standings.php';
 require_once BLM_PATH . 'includes/class-settings.php';
-require_once BLM_PATH . 'includes/class-frontend-standings.php';
+require_once BLM_PATH . 'includes/Modules/Standings/Frontend.php';
 
 /*
 |--------------------------------------------------------------------------

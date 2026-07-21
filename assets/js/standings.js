@@ -64,11 +64,11 @@ const blmNonce = blmStandings.nonce;
             return;
         }
 
-        standingsCache[cacheKey] = data.data;
+        standingsCache[cacheKey] = data.data.rows;
 
         document.getElementById(
             'blm-standings-body'
-        ).innerHTML = data.data;
+        ).innerHTML = data.data.rows;
 
         if (clickedTab) {
 

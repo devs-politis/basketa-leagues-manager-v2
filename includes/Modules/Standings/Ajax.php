@@ -15,7 +15,9 @@ class BLM_Standings_Ajax
         BLM_Standings_Renderer $renderer
     ) {
         $this->repository = $repository;
-        $this->renderer = $renderer;
+        $this->renderer   = $renderer;
+
+        $this->register();
     }
 
     /**
@@ -24,12 +26,12 @@ class BLM_Standings_Ajax
     public function register(): void
     {
         add_action(
-            'wp_ajax_blm_standings',
+            'wp_ajax_blm_load_standings',
             [$this, 'handle']
         );
 
         add_action(
-            'wp_ajax_nopriv_blm_standings',
+            'wp_ajax_nopriv_blm_load_standings',
             [$this, 'handle']
         );
     }

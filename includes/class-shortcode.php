@@ -7,8 +7,8 @@ if (!defined('ABSPATH')) {
 class BLM_Shortcode {
     
 
-    public function __construct() {
-
+    public function __construct()
+    {
         add_shortcode(
             'basketa_ticker',
             [$this, 'ticker']
@@ -19,23 +19,19 @@ class BLM_Shortcode {
             [$this, 'ticker']
         );
 
-		add_shortcode(
-		    'basketa_standings',
-		    [$this, 'standings']
-		);
-
-		$frontend_standings = new BLM_Frontend_Standings();
-
-        add_action(
-            'wp_ajax_blm_load_standings',
-            [$frontend_standings, 'ajax']
+        add_shortcode(
+            'basketa_standings',
+            [$this, 'standings']
         );
 
-        add_action(
-            'wp_ajax_nopriv_blm_load_standings',
-            [$frontend_standings, 'ajax']
-        );
+        $repository = new BLM_Standings_Repository();
 
+        $renderer = new BLM_Standings_Renderer();
+
+        new BLM_Standings_Ajax(
+            $repository,
+            $renderer
+        );
     }
 
     public function ticker($atts = []) {
@@ -412,7 +408,17 @@ ob_start();
 
     public function standings($atts = [])
     {
-        $frontend = new BLM_Frontend_Standings();
+        $repository = new BLM_Standings_Repository();
+
+        $season = new BLM_Standings_Season();
+
+        $renderer = new BLM_Standings_Renderer();
+
+        $frontend = new BLM_Standings_Frontend(
+            $repository,
+            $season,
+            $renderer
+        );
 
         return $frontend->render($atts);
     }

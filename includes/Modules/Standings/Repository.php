@@ -131,18 +131,36 @@ class BLM_Standings_Repository
         uasort(
             $enabled,
             static function ($a, $b) {
-
                 return
                     ($a['sort'] ?? 999)
                     <=>
                     ($b['sort'] ?? 999);
-
             }
         );
 
+        foreach ($enabled as $leagueId => &$league) {
+
+            $leagueId = (int) $leagueId;
+
+            $league['id'] = $leagueId;
+
+            $league['name'] = $this->getLeagueName(
+                $leagueId
+            );
+
+            $league['logo'] = $this->getLeagueLogo(
+                $leagueId
+            );
+
+            $league['seasons'] = $this->getLeagueSeasons(
+                $leagueId
+            );
+        }
+
+        unset($league);
+
         return $enabled;
     }
-
     /**
      * Returns a league setting from the admin configuration.
      */

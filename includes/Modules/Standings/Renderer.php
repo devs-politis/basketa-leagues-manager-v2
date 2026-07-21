@@ -101,9 +101,13 @@ class BLM_Standings_Renderer
      */
     public function render(array $view): string
         {
-        $leagueId = (int) ($view['league_id'] ?? 0);
-        $leagueName = $view['league_name'] ?? '';
-        $leagueLogo = $view['league_logo'] ?? '';
+        $league = $view['league'] ?? [];
+
+        $leagueId = (int) ($league['id'] ?? 0);
+
+        $leagueName = $league['name'] ?? '';
+
+        $leagueLogo = $league['logo'] ?? '';
         $season = (int) ($view['season'] ?? 0);
         $seasonLabel = $view['season_label'] ?? '';
         $stageName = $view['stage_name'] ?? '';
@@ -127,18 +131,18 @@ class BLM_Standings_Renderer
 
     <?php 
 
-    foreach ($enabled as $id => $league) : ?>
+    foreach ($enabled as $leagueItem) : ?>
 
         <button
-           class="blm-tab league-<?php echo esc_attr(sanitize_title($league['name'] ?? 'league')); ?> <?php echo (int) $id === $leagueId ? 'active' : ''; ?>"
-            data-league="<?php echo esc_attr($id); ?>"
+           class="blm-tab league-<?php echo esc_attr(sanitize_title($leagueItem['name'] ?? 'league')); ?> <?php echo (int) ($leagueItem['id'] ?? 0) === $leagueId ? 'active' : ''; ?>"
+            data-league="<?php echo esc_attr($leagueItem['id']); ?>"
             data-season="<?php echo esc_attr($season); ?>"
         >
 
-            <?php if (!empty($league['logo'])) : ?>
+            <?php if (!empty($leagueItem['logo'])) : ?>
 
                 <img
-                    src="<?php echo esc_url($league['logo']); ?>"
+                    src="<?php echo esc_url($leagueItem['logo']); ?>"
                     alt=""
                     class="blm-tab-logo"
                 >
@@ -146,7 +150,7 @@ class BLM_Standings_Renderer
             <?php endif; ?>
 
             <span>
-                <?php echo esc_html($league['name']); ?>
+                <?php echo esc_html($leagueItem['name']); ?>
             </span>
 
         </button>
